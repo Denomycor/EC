@@ -96,29 +96,27 @@ def fill1D(var, path, probs, dim, cur, max, distIni, movimentos, donut):
         mov = go(path[len(path)-1], dim, movimentos, donut)
 
     for i in range(1, dim+1):
-
-        new_path = path.copy()
-        new_path.append(i)
-
-        new_probs = probs.copy()
+        path.append(i)
         
         if cur == 0:
-            new_probs.append(distIni[i])
+            probs.append(distIni[i])
         else:       
-            new_probs.append(mov[i] if i in mov else 0)
-
+            probs.append(mov[i] if i in mov else 0)
 
         if cur == max:
-            var[tuple(new_path)] = mul(new_probs)
+            var[tuple(path)] = mul(probs)
         else:
-            fill1D(var, new_path, new_probs, dim, cur+1, max, distIni, movimentos, donut)
+            fill1D(var, path, probs, dim, cur+1, max, distIni, movimentos, donut)
+
+        del probs[-1]
+        del path[-1]
     
 
 
-"""ini=initDist(3,{1:0.6, 3: 0.4})
+ini=initDist(3,{1:0.6, 3: 0.4})
 f=fantasmaConj(ini, 2,{'E':0.3, 'O':0.2,'.':0.5})
 
 for i in range(1, 4):
     for j in range(1, 4):
         for k in range(1, 4):
-            print(f[i,j,k])"""
+            print(f[i,j,k])
