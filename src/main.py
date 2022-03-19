@@ -1,6 +1,6 @@
 from probability import ProbDist
 from probability import JointProbDist
-
+from prettytable import PrettyTable
 
 
 def printSorted(dicionario):
@@ -117,14 +117,24 @@ def fill(var, path, probs, dim, cur, max, distIni, movimentos, donut):
         del probs[-1]
         del path[-1]
     
+def probCondFantasma(pergunta, evidencia, conjunta):
+    var = 0
+
 
 
 ini=initDist((2,2), {(1,1):0.6, (2,1): 0.4})
 f=fantasmaConj(ini, 2, {'E': 0.5, 'S': 0.3, '.': 0.2})
 
-"""
-for i in range(1, 4):
-    for j in range(1, 4):
-        for k in range(1, 4):
-            print(f[i,j,k])
-"""
+def display(f):
+    pretty=PrettyTable()
+    aux = f.variables.copy()
+    aux.append('Prob')
+    pretty.field_names = aux 
+    #print(pretty.field_names)
+    for i in list(f.prob.keys()):
+        #print(i)
+        pretty.add_row(i+(f[i],))
+    print(pretty)
+
+
+
